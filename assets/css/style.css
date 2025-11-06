@@ -23,8 +23,8 @@
 
   --bg-gradient-onyx: linear-gradient(
     to bottom right, 
-    hsl(240, 1%, 25%) 3%, 
-    hsl(0, 0%, 19%) 97%
+    hsl(260, 10%, 8%) 3%, 
+    hsl(300, 12%, 5%) 97%
   );
   --bg-gradient-jet: linear-gradient(
     to bottom right, 
@@ -33,13 +33,13 @@
   ), hsl(240, 2%, 13%);
   --bg-gradient-yellow-1: linear-gradient(
     to bottom right, 
-    hsl(45, 100%, 71%) 0%, 
-    hsla(36, 100%, 69%, 0) 50%
+    hsl(2, 90%, 58%) 0%, 
+    hsla(2, 90%, 58%, 0) 50%
   );
   --bg-gradient-yellow-2: linear-gradient(
     135deg, 
-    hsla(45, 100%, 71%, 0.251) 0%, 
-    hsla(35, 100%, 68%, 0) 59.86%
+    hsla(2, 90%, 58%, 0.251) 0%, 
+    hsla(350, 70%, 45%, 0) 59.86%
   ), hsl(240, 2%, 13%);
   --border-gradient-onyx: linear-gradient(
     to bottom right, 
@@ -48,9 +48,11 @@
   );
   --text-gradient-yellow: linear-gradient(
     to right, 
-    hsl(45, 100%, 72%), 
-    hsl(35, 100%, 68%)
+    hsl(2, 90%, 58%), 
+    hsl(350, 70%, 45%)
   );
+  /* bright yellow/gold gradient for headings */
+  --text-gradient-gold: linear-gradient(to right, hsl(45, 100%, 54%), hsl(42, 100%, 44%));
 
   /* solid */
 
@@ -61,8 +63,17 @@
   --smoky-black: hsl(0, 0%, 7%);
   --white-1: hsl(0, 0%, 100%);
   --white-2: hsl(0, 0%, 98%);
-  --orange-yellow-crayola: hsl(45, 100%, 72%);
-  --vegas-gold: hsl(45, 54%, 58%);
+  --orange-yellow-crayola: hsl(2, 90%, 58%); /* primary red accent (keeps old var name for compatibility) */
+  --vegas-gold: hsl(350, 70%, 45%); /* darker red accent */
+  /* timeline / date color - use a variable so themes can remap it */
+  --timeline-date-color: var(--vegas-gold);
+  /* persistent red accent used for UI elements that should remain red in all themes */
+  --accent-red: hsl(2, 90%, 58%);
+  /* cyberpunk neon accents */
+  --neon-pink: #ff2d95;
+  --neon-cyan: #00e5ff;
+  --neon-purple: #a04dff;
+  --neon-glow: 0 6px 30px rgba(160,77,255,0.25), 0 0 18px rgba(0,229,255,0.08);
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
@@ -155,6 +166,14 @@ html { font-family: var(--ff-poppins); }
 
 body { background: var(--smoky-black); }
 
+/* Cyberpunk adjustments */
+body.cyberpunk {
+  background: radial-gradient(ellipse at 20% 10%, rgba(160,77,255,0.06), transparent 10%),
+              radial-gradient(ellipse at 90% 80%, rgba(0,229,255,0.04), transparent 12%),
+              var(--bg-gradient-onyx);
+  color: var(--white-2);
+}
+
 
 
 
@@ -182,7 +201,7 @@ article {
 
 .icon-box {
   position: relative;
-  background: var(--border-gradient-onyx);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
   width: 30px;
   height: 30px;
   border-radius: 8px;
@@ -190,8 +209,8 @@ article {
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  color: var(--orange-yellow-crayola);
-  box-shadow: var(--shadow-1);
+  color: var(--neon-cyan);
+  box-shadow: var(--neon-glow);
   z-index: 1;
 }
 
@@ -205,6 +224,14 @@ article {
 }
 
 .icon-box ion-icon { --ionicon-stroke-width: 35px; }
+
+/* Make the contact icon boxes (email, phone, location) red */
+.contacts-list .contact-item .icon-box {
+  color: #ff4d4f; /* icon color */
+  border: 1px solid rgba(255,77,79,0.12);
+  background: linear-gradient(135deg, rgba(255,77,79,0.06), rgba(255,77,79,0.03));
+  box-shadow: 0 6px 24px rgba(255,77,79,0.08);
+}
 
 article { display: none; }
 
@@ -224,6 +251,76 @@ article.active {
 .h5 {
   color: var(--white-2);
   text-transform: capitalize;
+}
+
+.h2, .article-title {
+  text-shadow: 0 2px 14px rgba(160,77,255,0.12), 0 0 10px rgba(0,229,255,0.06);
+}
+
+/* Services: cyberpunk look */
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.service-item {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  border: 1px solid rgba(160,77,255,0.12);
+  border-radius: 14px;
+  padding: 14px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(160,77,255,0.08), 0 6px 30px rgba(0,229,255,0.04);
+}
+
+.service-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0,229,255,0.08);
+  background: linear-gradient(135deg, rgba(160,77,255,0.06), rgba(0,229,255,0.04));
+  box-shadow: 0 6px 24px rgba(160,77,255,0.06);
+}
+
+.service-item .service-item-title {
+  /* use a yellow/gold gradient for titles, fallback to solid gold */
+  background: var(--text-gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: hsl(45, 100%, 50%); /* fallback for browsers that don't support background-clip */
+  text-shadow: 0 6px 18px rgba(255,204,0,0.06);
+}
+
+.service-item-text {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* small neon accents for links/buttons */
+.form-btn, .social-link {
+  transition: box-shadow var(--transition-1), transform var(--transition-1);
+}
+
+.form-btn:hover, .social-link:hover {
+  box-shadow: 0 8px 30px rgba(160,77,255,0.12), 0 0 18px rgba(0,229,255,0.06);
+}
+
+/* Remove neon glow on navbar links when hovered but keep color transition */
+.navbar-link {
+  transition: color var(--transition-1);
+}
+.navbar-link:hover, .navbar-link:focus {
+  box-shadow: none !important;
 }
 
 .h2 { font-size: var(--fs-1); }
@@ -808,7 +905,7 @@ main {
 }
 
 .timeline-list span {
-  color: var(--vegas-gold);
+  color: var(--timeline-date-color);
   font-weight: var(--fw-400);
   line-height: 1.6;
 }
@@ -911,13 +1008,13 @@ main {
   color: #fff;
 }
 
-/* Small yellow underline for each skill item */
+/* Small underline for each skill item (gradient red) */
 .skills-item::after {
   content: "";
   display: block;
   width: 40px; /* Length of the underline */
   height: 3px;
-  background: linear-gradient(to right, #ffd700, #ffcc00); /* Yellow gradient */
+  background: var(--text-gradient-yellow); /* gradient red underline */
   margin-top: 5px;
   border-radius: 1px;
 }
@@ -2298,6 +2395,12 @@ textarea.form-input::-webkit-resizer { display: none; }
   --white-2: hsl(0, 0%, 25%);
   --light-gray: hsl(0, 0%, 40%);
   --orange-yellow-crayola: hsl(45, 100%, 50%);
+  /* in light mode, map red gradient/accents to the yellow/gold gradient */
+  --accent-red: var(--orange-yellow-crayola);
+  /* make any uses of the 'text-gradient-yellow' variable show the gold gradient in light mode */
+  --text-gradient-yellow: var(--text-gradient-gold);
+  /* timeline dates should appear gold in light mode */
+  --timeline-date-color: var(--orange-yellow-crayola);
 }
 
 /* Body and component backgrounds */
@@ -2332,6 +2435,14 @@ textarea.form-input::-webkit-resizer { display: none; }
 :root.light-mode .icon-box {
   background: var(--eerie-black-2);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Override red icon accents in light mode to gold/yellow */
+:root.light-mode .contacts-list .contact-item .icon-box {
+  color: var(--orange-yellow-crayola);
+  border: 1px solid rgba(255,204,0,0.12);
+  background: linear-gradient(135deg, rgba(255,204,0,0.06), rgba(255,204,0,0.03));
+  box-shadow: 0 6px 24px rgba(255,204,0,0.08);
 }
 
 /* Font Colors */
@@ -2387,7 +2498,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 /* Adjust the underline color for skills */
 :root.light-mode .skills-container .skills-item span::after {
-  background-color: var(--highlight-color);
+  background: var(--text-gradient-yellow);
 }
 
 /* Ensure other texts turn to the dark color in light mode */
@@ -2444,7 +2555,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   display: block;
   width: 40px; /* Length of the underline */
   height: 3px;
-  background: linear-gradient(to right, #ffd700, #ffcc00); /* Yellow gradient */
+  background: var(--text-gradient-yellow); /* gradient red underline */
   margin-top: 5px;
   border-radius: 1px;
   margin: 0 auto; /* Center the underline */
@@ -2465,3 +2576,56 @@ textarea.form-input::-webkit-resizer { display: none; }
     max-width: 22%;
   }
 }
+
+
+/*-------------------------------*
+  Moving background (subtle)
+  Adds a lightweight animated layer behind content
+-------------------------------*/
+
+/* ensure body can host the pseudo-element */
+.cyberpunk {
+  position: relative;
+}
+
+.cyberpunk::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0; /* behind UI which uses z-index >= 1 */
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 200% 200%;
+  opacity: 0.85;
+  /* two soft color blobs that will move */
+  background-image: radial-gradient(circle at 10% 20%, rgba(160,77,255,0.10) 0%, rgba(160,77,255,0.04) 15%, transparent 35%),
+                    radial-gradient(circle at 90% 80%, rgba(0,229,255,0.08) 0%, rgba(0,229,255,0.03) 12%, transparent 30%);
+  mix-blend-mode: screen;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  animation: moveBackground 24s linear infinite;
+}
+
+@keyframes moveBackground {
+  0%   { transform: translate3d(0%, 0%, 0) scale(1); }
+  25%  { transform: translate3d(-6%, -3%, 0) scale(1.02); }
+  50%  { transform: translate3d(-12%, 2%, 0) scale(1.03); }
+  75%  { transform: translate3d(-6%, 6%, 0) scale(1.01); }
+  100% { transform: translate3d(0%, 0%, 0) scale(1); }
+}
+
+/* Keep content above the animated layer; many elements already set z-index >= 1 */
+main, .sidebar, article, nav, .navbar { position: relative; z-index: 1; }
+
+/* Border overlay canvas (interactive subtle border glow + particles) */
+#border-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2; /* above background but keep pointer-events none so UI remains interactive */
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
